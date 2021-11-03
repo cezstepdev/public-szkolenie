@@ -1,6 +1,38 @@
-<?xml version="1.0"?>
-<project name="Hello World Project" default="info">
-	<target name="info">
-		<echo> Hello Ant</echo>
-	</target>
+<project name="Salesforce Ant tasks for English Live deployments" default="test-deploy-qa" basedir="." xmlns:sf="antlib:com.salesforce">
+    <property environment="env"/>
+    <property file="build.properties"/>
+
+    <condition property="env.qa_username" value=""> <not> <isset property="env.qa_username"/> </not> </condition>
+    <condition property="env.qa_password" value=""> <not> <isset property="env.qa_password"/> </not> </condition>
+
+    <taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
+        <classpath>
+            <pathelement location="ant-salesforce.jar"/>
+        </classpath>
+    </taskdef>
+
+    <!-- QA SANDBOX -->
+	<target name="validate" description="Test deployment to Developer Sandbox (without destructive changes)">
+    <sf:deploy
+                username="${sf.username}"
+                password="${sf.password}"
+                serverurl="https://login.salesforce.com"
+                deployRoot="src"
+                testLevel="RunLocalTests"
+                checkOnly="true"
+                pollwaitmillis="10000"
+                maxpoll="1000"
+        />
+    </target>
+	
+    <target name="retrieve-dev">
+        <sf:retrieve
+                username="${sf.username}"
+                password="${sf.password}"
+                serverurl="https://login.salesforce.com"
+                retrievetarget="src"
+                unpackaged="retrieve/package.xml"
+        />
+    </target>
 </project>
+    

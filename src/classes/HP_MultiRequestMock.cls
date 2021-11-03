@@ -6,6 +6,7 @@ public with sharing class HP_MultiRequestMock implements HttpCalloutMock {
     }
 
     public HTTPResponse respond(HTTPRequest req) {
+        System.debug(req);
         HttpCalloutMock mock = requests.get(req.getEndpoint());
         if (mock != null) {
             return mock.respond(req);
