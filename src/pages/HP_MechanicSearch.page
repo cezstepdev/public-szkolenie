@@ -13,19 +13,19 @@
         }
     </style>
     <div id="updateDiv" style="display: none;">
-        <apex:outputPanel>
+        <apex:outputPanel >
             <apex:include pageName="HP_MechanicUpdate"/>
         </apex:outputPanel>
     </div>
 
     <div id="deleteDiv" style="display: none;">
-        <apex:outputPanel>
+        <apex:outputPanel >
             <apex:include pageName="HP_MechanicDelete"/>
         </apex:outputPanel>
     </div>
 
     <div id="addDiv" style="display: none;">
-        <apex:outputPanel>
+        <apex:outputPanel >
             <apex:include pageName="HP_MechanicAdd"/>
         </apex:outputPanel>
     </div>
@@ -41,7 +41,7 @@
             </div>
         </apex:facet>
     </apex:actionStatus>
-    <apex:slds></apex:slds>
+    <apex:slds ></apex:slds>
     <div class="slds-scope">
             <div class="slds-page-header" style="margin-bottom:10px;height:5rem">
                 <div class="slds-grid">
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <div class="slds-no-flex">
-                            <apex:form>
+                            <apex:form >
                                 <apex:commandButton styleClass="slds-button slds-button_neutral"
                                                     onComplete="openAdd(); return false;"
                                                     value="New Mechanic" status="status"
@@ -121,7 +121,7 @@
                             <apex:commandButton id="search" styleClass="slds-button slds-button_neutral" action="{!searchMechanic}"
                                                 value="{!$Label.SearchButton}" status="status" reRender="form, clear, search"
                                                 style="margin: 5px"/>
-                            <apex:actionRegion>
+                            <apex:actionRegion >
                                 <apex:commandButton id="clear" styleClass="slds-button slds-button_neutral" action="{!clear}"
                                                     value="{!$Label.ClearButton}" status="status"
                                                     reRender="form, clear, search" style="margin: 5px"

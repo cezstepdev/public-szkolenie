@@ -1,5 +1,5 @@
 <apex:page id="HP_MechanicUpdate" controller="HP_MechanicSearchControllerREST">
-    <apex:slds></apex:slds>
+    <apex:slds ></apex:slds>
     <div class="slds-scope">
         <apex:actionStatus id="updateStatus">
             <apex:facet name="start">

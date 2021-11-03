@@ -13,13 +13,13 @@
                 <apex:commandButton action="{!cancel}" value="Cancel"/>
             </apex:pageBlockButtons>
 
-            <apex:pageBlockSection  title="{!$Label.GeneralTitle}" id="generalInfo" collapsible="true">
+            <apex:pageBlockSection title="{!$Label.GeneralTitle}" id="generalInfo" collapsible="true">
                 <apex:inputField value="{!Hospital__c.Name}"/>
                 <apex:inputField value="{!Hospital__c.E_mail__c}"/>
                 <apex:inputField value="{!Hospital__c.Phone__c}"/>
             </apex:pageBlockSection>
 
-            <apex:pageBlockSection  title="{!$Label.DetailTitle}" id="detailInfo" collapsible="true">
+            <apex:pageBlockSection title="{!$Label.DetailTitle}" id="detailInfo" collapsible="true">
                 <apex:inputField value="{!Hospital__c.Country__c}"/>
                 <apex:inputField value="{!Hospital__c.State__c}"/>
                 <apex:inputField value="{!Hospital__c.Street__c}"/>

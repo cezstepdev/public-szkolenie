@@ -20,7 +20,7 @@
             flex: 1;
         }
     </style>
-    <apex:form>
+    <apex:form >
         <div style="text-align: center; margin-top: 10px">
             <input type='file' id="chooseInput" onchange="readURL(event)" hidden="hidden"/>
             <label class="btn" id="chooseLabel" for="chooseInput">{!$Label.Select_File}</label>

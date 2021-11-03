@@ -1,0 +1,9 @@
+<aura:component description="MOV_CastItem">
+    <aura:attribute name="item" type="Object" access="public"/>
+    <div class="slds-m-around_small" style="width: 700px">
+        <article class="leaderboard__profile">
+            <img src="{!v.item.image}" class="leaderboard__picture"/>
+            <span class="leaderboard__name">{!v.item.name} as ...</span>
+        </article>
+    </div>
+</aura:component>

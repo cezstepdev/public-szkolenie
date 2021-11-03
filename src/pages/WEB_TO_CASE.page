@@ -15,7 +15,7 @@
     <!--  NOTE: Please add the following <FORM> element to your page.             -->
     <!--  ----------------------------------------------------------------------  -->
 
-    <apex:slds></apex:slds>
+    <apex:slds ></apex:slds>
     <div class="login-root">
         <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
             <div class="loginbackground box-background--white padding-top--64">
@@ -87,7 +87,8 @@
                                         Contact Name<abbr class="slds-required" title="required">* </abbr>
                                     </label>
                                     <div class="slds-form-element__control">
-                                        <input required="true" id="name" maxlength="80" name="name" size="20" type="text"/><br/>
+                                        <input required="true" id="name" maxlength="80" name="name" size="20"
+                                               type="text"/><br/>
                                     </div>
                                 </div>
                                 <div class="field padding-bottom--24">
@@ -116,7 +117,8 @@
                                         Description<abbr class="slds-required" title="required">* </abbr>
                                     </label>
                                     <div class="slds-form-element__control">
-                                        <textarea required="true" class="slds-textarea" name="description"></textarea><br/>
+                                        <textarea required="true" class="slds-textarea"
+                                                  name="description"></textarea><br/>
                                     </div>
                                 </div>
                                 <div class="field padding-bottom--24">
@@ -371,4 +373,3 @@
     </style>
 
 </apex:page>
-

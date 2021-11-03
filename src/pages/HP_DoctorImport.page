@@ -7,14 +7,14 @@
             <div style="text-align: center">
                 <apex:inputFile value="{!csvFileBody}" filename="{!csvAsString}" accept=".csv"/>
                 <apex:actionSupport event="onchange" reRender="load_data"/>
-                <apex:actionRegion>
+                <apex:actionRegion >
                     <apex:commandButton id="load_data" value="Open" action="{!openCSV}" disabled="{!!disable}"/>
                     <apex:actionSupport reRender="pageBlockSection,load_data" event="onclick"/>
                 </apex:actionRegion>
             </div>
         </apex:pageBlock>
     </apex:form>
-    <apex:actionRegion>
+    <apex:actionRegion >
         <apex:form id="pageBlockSection">
             <apex:pageBlock rendered="{!doctorList.size!=0}">
                 <apex:pageblocktable id="doctorTable" value="{!doctorsWrappers}" var="doctorWrapperList">
@@ -32,7 +32,7 @@
                         </apex:outputPanel>
                     </apex:column>
                 </apex:pageblocktable>
-                <apex:pagemessages/>
+                <apex:pagemessages />
                 <div style="margin-top: 5px">
                     <apex:commandButton value="All" action="{!checkAll}" reRender="pageBlockSection"/>
                     <apex:commandButton value="None" action="{!uncheckAll}" reRender="pageBlockSection"/>

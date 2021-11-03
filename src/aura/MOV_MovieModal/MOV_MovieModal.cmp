@@ -1,0 +1,14 @@
+<aura:component description="MOV_MovieModal">
+    <aura:attribute name="item" type="Object" access="public"/>
+    <img src="{!v.item.image}" style="object-fit:cover;
+         width:100%;
+         height:300px;
+         border: solid 1px #CCC"/>
+    <lightning:card title="Description">
+        <aura:set attribute="actions">
+            <lightning:button label="Details"
+                              variant="brand" onclick="{!c.editAccount}"/>
+        </aura:set>
+        {!v.item.description}
+    </lightning:card>
+</aura:component>

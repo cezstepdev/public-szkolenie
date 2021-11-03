@@ -1,0 +1,12 @@
+<aura:component description="MOV_Item">
+    <aura:attribute name="item" type="Object" access="public"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <lightning:button class="tile" onclick="{!c.onImageClick}">
+        <div style="{!'background-image: url(' + v.item.image + ')'}" class="innerTile">
+            <div class="lower-third">
+                <h1 class="slds-truncate">{!v.item.title}</h1>
+            </div>
+        </div>
+    </lightning:button>
+</aura:component>

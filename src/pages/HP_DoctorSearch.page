@@ -11,7 +11,7 @@
             </apex:pageBlockSection>
             <div align="center">
                 <apex:commandButton action="{!searchDoctor}" value="{!$Label.SearchButton}" status="status" reRender="form"/>
-                <apex:actionRegion>
+                <apex:actionRegion >
                     <apex:commandButton action="{!clear}" onComplete="clear()" value="{!$Label.ClearButton}" status="status"
                                         reRender="form"/>
                 </apex:actionRegion>
@@ -45,7 +45,7 @@
                                         disabled="{!!setCon.hasNext}"/>
                     <apex:commandButton status="fetchStatus" reRender="pbId" value="{!$Label.LastPage}" action="{!setCon.last}"
                                         disabled="{!!setCon.hasNext}"/>
-                    <apex:outputPanel>
+                    <apex:outputPanel >
                         <apex:actionStatus id="fetchStatus">
                             <apex:facet name="start">
                                 <img src="/img/loading.gif"/>

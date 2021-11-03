@@ -13,7 +13,7 @@
                 <apex:commandButton action="{!cancel}" value="Cancel"/>
             </apex:pageBlockButtons>
 
-            <apex:pageBlockSection  title="{!$Label.GeneralTitle}" id="generalInfo">
+            <apex:pageBlockSection title="{!$Label.GeneralTitle}" id="generalInfo">
                 <apex:inputField value="{!Doctor__c.FirstName__c}"/>
                 <apex:inputField value="{!Doctor__c.Name}"/>
                 <apex:inputField value="{!Doctor__c.Email__c}"/>
@@ -22,7 +22,7 @@
                 <apex:inputField value="{!Doctor__c.Land__c}"/>
             </apex:pageBlockSection>
 
-            <apex:pageBlockSection  title="{!$Label.DetailTitle}" id="detailInfo">
+            <apex:pageBlockSection title="{!$Label.DetailTitle}" id="detailInfo">
                 <apex:inputField value="{!Doctor__c.City__c}"/>
                 <apex:inputField value="{!Doctor__c.Age__c}"/>
                 <apex:inputField value="{!Doctor__c.Street__c}"/>

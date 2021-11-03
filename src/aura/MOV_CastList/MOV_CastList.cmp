@@ -1,0 +1,12 @@
+<aura:component description="MOV_CastList">
+    <aura:attribute name="items" type="Object[]" access="public"/>
+    <aura:attribute name="itemToDisplay" type="Object[]" access="public"/>
+    <aura:attribute name="itemListSize" type="Integer" access="public" default="20"/>
+    <aura:attribute name="page" type="Integer" access="public" default="1"/>
+    <aura:attribute name="disableNext" type="Boolean" access="public" default="false"/>
+    <aura:attribute name="disablePrev" type="Boolean" access="public" default="false"/>
+
+    <aura:iteration items="{!v.items}" var="item">
+        <c:MOV_CastItem item="{#item}"/>
+    </aura:iteration>
+</aura:component>

@@ -3,14 +3,14 @@
     <apex:includeScript value="{!$Resource.SurveyForce + '/SurveyForce_jquery.js'}"/>
     <apex:includeScript value="{!$Resource.SurveyForce + '/surveyforce.js'}"/>
     <!--<apex:stylesheet value="{!$Resource.SurveyForce + '/surveyforce.css'}"/>-->
-    <apex:slds/>
+    <apex:slds />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 
     <script>
         $(document).ready(function () {
         });
     </script>
-    <apex:slds></apex:slds>
+    <apex:slds ></apex:slds>
     <div class="login-root">
         <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
             <div class="loginbackground box-background--white padding-top--64">
@@ -63,7 +63,7 @@
                             <div id="survey_container" class="slds-scope slds" style="width: 1000px;">
                                 <apex:form id="theForm">
 
-                                    <apex:pageMessages/>
+                                    <apex:pageMessages />
                                     <!-- <c:uiMessage severity="success" message="{!surveyThankYouText}" renderMe="{!thankYouRendered == true}" />
 			<c:viewSurveyThankYou message="{!surveyThankYouText}" renderMe="{!thankYouRendered == true}" /> -->
 
@@ -100,19 +100,16 @@
                                                                           layout="pageDirection"
                                                                           rendered="{!surveyQuestion.renderRadioVertical}"
                                                                           value="{!surveyQuestion.selectedOption}">
-                                                            <apex:selectOptions
-                                                                    value="{!surveyQuestion.responseOptions}"/>
+                                                            <apex:selectOptions value="{!surveyQuestion.responseOptions}"/>
                                                         </apex:selectRadio>
                                                     </apex:outputPanel>
 
-                                                    <apex:outputPanel
-                                                            rendered="{!surveyQuestion.renderMultiCheckboxes}">
+                                                    <apex:outputPanel rendered="{!surveyQuestion.renderMultiCheckboxes}">
                                                         <apex:selectCheckboxes styleClass="convertToLDS"
                                                                                layout="pageDirection"
                                                                                rendered="{!surveyQuestion.renderMultiCheckboxes}"
                                                                                value="{!surveyQuestion.selectedOptions}">
-                                                            <apex:selectOptions
-                                                                    value="{!surveyQuestion.responseOptions}"/>
+                                                            <apex:selectOptions value="{!surveyQuestion.responseOptions}"/>
                                                         </apex:selectCheckboxes>
                                                     </apex:outputPanel>
                                                     <apex:outputPanel rendered="{!surveyQuestion.renderFreeText}">
@@ -125,13 +122,11 @@
                                                             </div>
                                                         </div>
                                                     </apex:outputPanel>
-                                                    <apex:outputPanel
-                                                            rendered="{!surveyQuestion.renderRadioHorizontal}">
+                                                    <apex:outputPanel rendered="{!surveyQuestion.renderRadioHorizontal}">
                                                         <apex:selectRadio styleClass="convertToLDS"
                                                                           rendered="{!surveyQuestion.renderRadioHorizontal}"
                                                                           value="{!surveyQuestion.selectedOption}">
-                                                            <apex:selectOptions
-                                                                    value="{!surveyQuestion.responseOptions}"/>
+                                                            <apex:selectOptions value="{!surveyQuestion.responseOptions}"/>
                                                         </apex:selectRadio>
                                                     </apex:outputPanel>
                                                 </div>
@@ -141,8 +136,7 @@
                                     <apex:outputPanel rendered="{!thankYouRendered == false}">
                                         <div class="slds-box slds-theme_default">
                                             <div class="field padding-bottom--24 slds-align_absolute-center">
-                                            <apex:outputPanel
-                                                    rendered="{!isInternal && !Survey__c.All_Responses_Anonymous__c}">
+                                            <apex:outputPanel rendered="{!isInternal && !Survey__c.All_Responses_Anonymous__c}">
                                                 <span class="slds-text-body_regular">{!$Label.LABS_SF_Answer_as}:</span>
                                                 <apex:selectRadio value="{!anonymousAnswer}">
                                                     <apex:selectOptions value="{!anonymousOrUser}"/>

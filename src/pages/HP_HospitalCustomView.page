@@ -19,7 +19,7 @@
                 <apex:outputField value="{!Hospital__c.Phone__c}"/>
             </apex:pageBlockSection>
 
-            <apex:pageBlockSection  title="{!$Label.DetailTitle}" id="detailInfo" collapsible="true">
+            <apex:pageBlockSection title="{!$Label.DetailTitle}" id="detailInfo" collapsible="true">
                 <apex:outputField value="{!Hospital__c.Country__c}"/>
                 <apex:outputField value="{!Hospital__c.State__c}"/>
                 <apex:outputField value="{!Hospital__c.Street__c}"/>

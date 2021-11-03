@@ -18,11 +18,12 @@
                 password="${sf.password}"
                 serverurl="https://login.salesforce.com"
                 deployRoot="src"
-                testLevel="RunLocalTests"
                 checkOnly="true"
                 pollwaitmillis="10000"
                 maxpoll="1000"
-        />
+				testlevel="RunSpecifiedTests">
+				<runTest>HP_ContractOverLappingTest</runTest>
+        </sf:deploy>
     </target>
 	
     <target name="retrieve-dev">
@@ -31,8 +32,22 @@
                 password="${sf.password}"
                 serverurl="https://login.salesforce.com"
                 retrievetarget="src"
-                unpackaged="retrieve/package.xml"
+                unpackaged="src/package.xml"
         />
+    </target>
+	
+	<target name="deploy" description="Test deployment to Developer Sandbox (without destructive changes)">
+    <sf:deploy
+                username="${sf.username}"
+                password="${sf.password}"
+                serverurl="https://login.salesforce.com"
+                deployRoot="src"
+                checkOnly="false"
+                pollwaitmillis="10000"
+                maxpoll="1000"
+				testlevel="RunSpecifiedTests">
+				<runTest>HP_ContractOverLappingTest</runTest>
+        </sf:deploy>
     </target>
 </project>
     
