@@ -1,0 +1,27 @@
+<aura:component description="MOV_MovieEvaluationButtons" controller="MOV_RatingController">
+    <aura:attribute name="item" type="Object" access="public"/>
+    <aura:attribute name="liked" default="false" type="Boolean" />
+    <aura:attribute name="disliked" default="false" type="Boolean" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.item}" action="{!c.doInit}"/>
+
+    <div class="slds-m-around_medium" style="display: flex">
+        <div style="padding-right: 5px">
+            <lightning:buttonIconStateful
+                    iconName="utility:favorite"
+                    selected="{! v.liked}"
+                    onclick="{! c.handleLikeButtonClick }"
+                    disabled="{! v.disliked}"
+                    alternativeText="Add to favourite list" />
+        </div>
+        <div>
+            <lightning:buttonIconStateful
+                    iconName="utility:error"
+                    selected="{! v.disliked}"
+                    disabled="{!v.liked}"
+                    onclick="{! c.handleDislikeButtonClick }"
+                    alternativeText="Add to black list" />
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,319 @@
+<apex:page controller="HP_MechanicSearchController" docType="html-5.0">
+    <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css"/>
+    <apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/start/jquery-ui.css"/>
+    <apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"/>
+
+    <style>
+        .ui-dialog-titlebar-close {
+            display: none;
+        }
+    </style>
+    <div id="updateDiv" style="display: none;">
+        <apex:outputPanel>
+            <apex:include pageName="HP_MechanicUpdate"/>
+        </apex:outputPanel>
+    </div>
+
+    <div id="deleteDiv" style="display: none;">
+        <apex:outputPanel>
+            <apex:include pageName="HP_MechanicDelete"/>
+        </apex:outputPanel>
+    </div>
+
+    <div id="addDiv" style="display: none;">
+        <apex:outputPanel>
+            <apex:include pageName="HP_MechanicAdd"/>
+        </apex:outputPanel>
+    </div>
+
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div class="slds-spinner_container" style="margin-left: 230px">
+                <div id="mySpinner" role="status" class="slds-spinner slds-spinner_small">
+                    <span class="slds-assistive-text"></span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:slds></apex:slds>
+    <div class="slds-scope">
+            <div class="slds-page-header" style="margin-bottom:10px;height:5rem">
+                <div class="slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-standard-opportunity">
+                                   <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#search')}"/>
+                                    </svg>
+                                </span>
+                            <span class="slds-icon_container slds-icon-standard-account" title="account">
+                                  <span class="slds-assistive-text">account</span>
+                                </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div>
+                                <div class="slds-col slds-has-flexi-truncate">
+                                    <p class="slds-text-title_caps slds-line-height_reset">Mechanic</p>
+                                    <div class="slds-media__body">
+                                        <h2 class="slds-card__header-title">
+                                            <span>Search Mechanic</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-no-flex">
+                            <apex:form>
+                                <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                                    onComplete="openAdd(); return false;"
+                                                    value="New Mechanic" status="status"
+                                                    reRender="form, first, name, addMail, addNation, addPhone"
+                                                    action="{!clearMechanic}" style="margin: 5px"/>
+                            </apex:form>
+                        </div>
+                    </header>
+                </div>
+            </div>
+        <div id="dialog" style="text-align: center;">
+            <div id="alertSuccess" class="slds-notify slds-notify_toast slds-theme_success"
+                 role="alertdialog" style="justify-content: center;"/>
+            <div id="alertError" class="slds-notify slds-notify_toast slds-theme_error"
+                 role="alertdialog" style="justify-content: center;"/>
+        </div>
+        <apex:form id="form">
+            <apex:outputPanel id="pageBlock">
+                <div class="slds-card">
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-grid slds-wrap" styleClass="slds-text-align_center">
+                            <div class="slds-col slds-size_1-of-3">
+                                <div class="slds-form-element slds-box_x-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1">{!$Label.FirstNameHeader}</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField styleClass="slds-input" value="{!mechanicFields.First_Name__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <div class="slds-form-element slds-box_x-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1">{!$Label.LastNameHeader}</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField styleClass="slds-input" value="{!mechanicFields.Name}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <div class="slds-form-element slds-box_x-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1">{!$Label.CountryHeader}</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField styleClass="slds-input" value="{!mechanicFields.Nation__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div align="center">
+                            <apex:commandButton id="search" styleClass="slds-button slds-button_neutral" action="{!searchMechanic}"
+                                                value="{!$Label.SearchButton}" status="status" reRender="form, clear, search"
+                                                style="margin: 5px"/>
+                            <apex:actionRegion>
+                                <apex:commandButton id="clear" styleClass="slds-button slds-button_neutral" action="{!clear}"
+                                                    value="{!$Label.ClearButton}" status="status"
+                                                    reRender="form, clear, search" style="margin: 5px"
+                                                    disabled="{!IF(mechanics != null && mechanics.size ==0 , true, false)}"/>
+                            </apex:actionRegion>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel id="pbId" rendered="{!mechanics.size > 0}">
+                <div class="slds-card" style="margin-top: 10px">
+                    <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <span>Searched Mechanic</span>
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <apex:dataTable value="{!mechanicList}" var="mechanicVar" id="mechanicTable"
+                                             styleClass="slds-table slds-table--bordered slds-table--striped">
+                            <apex:column headerValue="Actions" width="115px">
+                                <apex:commandLink styleclass="slds-button slds-button_neutral"
+                                                  style="text-decoration:none;padding:4px; width: 50px; max-height: 30px; margin-left:5px;margin-right:5px"
+                                                  status="status"
+                                                  value="Update" onComplete="openUpdate(); return false;"
+                                                  action="{!setMechanicProperties}"
+                                                  immediate="true"
+                                                  reRender="form, mechanicFirstName, mechanicName, nation, mail, phone">
+                                    <apex:param value="{!mechanicVar.ExternalId__c}" name="mechanicId" assignTo="{!mechanicId}"/>
+                                </apex:commandLink>
+                                <apex:commandLink styleclass="slds-button slds-button_brand" status="status"
+                                                  style="text-decoration:none;padding:4px; width: 50px; max-height: 30px; margin-left:5px;margin-right:5px"
+                                                  value="Delete" onComplete="openDelete(); return false;"
+                                                  action="{!setMechanicProperties}"
+                                                  reRender="deleteMechanicForm">
+                                    <apex:param value="{!mechanicVar.ExternalId__c}" name="mechanicId" assignTo="{!mechanicId}"/>
+                                </apex:commandLink>
+                            </apex:column>
+                            <apex:column headerValue="{!$Label.FirstNameHeader}">
+                                <apex:outputField value="{!mechanicVar.First_Name__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="{!$Label.LastNameHeader}">
+                                <apex:outputField value="{!mechanicVar.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="{!$Label.CountryHeader}">
+                                <apex:outputField value="{!mechanicVar.Country__c}"/>
+                            </apex:column>
+                        </apex:dataTable>
+                        <div id="pagination_items" style="margin-top:10px">
+                            <div class="slds-form-element" style="width:5%;float:left">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <apex:selectList size="1" multiSelect="false"
+                                                         value="{!size}"
+                                                         styleClass="slds-select">
+                                            <apex:actionSupport event="onchange" action="{!limitList}" reRender="pbId"
+                                                                status="fetchStatus"/>
+                                            <apex:selectOptions value="{!paginationSizeOptions}"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="First" rerender="pbId"
+                                                action="{!firstPage}" disabled="{!IF(offsetSize == 0,true,false)}"
+                                                style="margin-left:5px;margin-right:5px" status="fetchStatus"/>
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="Prev" rerender="pbId"
+                                                action="{!previousPage}" disabled="{!IF(offsetSize == 0,true,false)}"
+                                                style="margin-right:5px" status="fetchStatus"/>
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="Next" rerender="pbId"
+                                                action="{!nextPage}" disabled="{!IF((offsetSize + size) > totalRecs,true,false)}"
+                                                style="margin-right:5px" status="fetchStatus"/>
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="Last" rerender="pbId"
+                                                action="{!lastPage}" disabled="{!IF((offsetSize + size) > totalRecs,true,false)}"
+                                                status="fetchStatus"/>
+                            <apex:outputPanel style="padding-left: 10px">
+                                <apex:actionStatus id="fetchStatus">
+                                    <apex:facet name="start">
+                                        <img src="/img/loading.gif"/>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </apex:form>
+    </div>
+
+    <script>
+        j$ = jQuery.noConflict();
+        let $alert;
+        hideAlert();
+
+        function hideAlert() {
+            j$('#alertSuccess').hide();
+            j$('#alertError').hide();
+            j$('#addAlertError').hide();
+            j$('#updateAlertError').hide();
+            j$('#deleteAlertError').hide();
+        }
+
+        function openUpdate() {
+            j$('#updateDiv').dialog({
+                autoOpen: true,
+                width: 200,
+                height: 100,
+                modal: true,
+                title: "UPDATE MECHANIC"
+            });
+            j$('#updateDiv').display = "block";
+        }
+
+        function openDelete() {
+            j$('#deleteDiv').dialog({
+                autoOpen: true,
+                width: 200,
+                height: 100,
+                modal: true,
+                title: "DELETE MECHANIC"
+            });
+            j$('#deleteDiv').display = "block";
+        }
+
+        function openAdd() {
+            j$('#addDiv').dialog({
+                autoOpen: true,
+                width: 200,
+                height: 100,
+                modal: true,
+                title: "ADD MECHANIC"
+            });
+            j$('#postDiv').display = "block";
+        }
+
+        function alert(message, type, error) {
+            if(type === 'success') {
+                $alert = j$('#alertSuccess')
+            }
+            else {
+                if(error == 'del') {
+                    $alert = j$('#deleteAlertError');
+                }
+                else if(error == 'add') {
+                    $alert = j$('#addAlertError');
+                }
+                else if(error == 'update') {
+                    $alert = j$('#updateAlertError');
+                }
+                else {
+                    $alert = j$('#alertError');
+                }
+            }
+            $alert.show();
+            $alert.text(message);
+            setTimeout(hideAlert, 3000)
+        }
+
+        function closeUpdateDialog() {
+            j$('#updateDiv').dialog('close');
+        }
+
+        function updateDialog(message, type) {
+            alert(message, type, 'update');
+            if(type == 'success') {
+                j$('#updateDiv').dialog('close');
+            }
+        }
+
+        function closeDeleteDialog() {
+            j$('#deleteDiv').dialog('close');
+        }
+
+        function deleteDialog(message, type) {
+            alert(message, type, 'del');
+            if(type == 'success') {
+                j$('#deleteDiv').dialog('close');
+            }
+        }
+
+        function closeAddDialog() {
+            j$('#addDiv').dialog('close');
+        }
+
+        function addDialog(message, type) {
+            alert(message, type, 'add');
+            if(type == 'success') {
+                j$('#addDiv').dialog('close');
+            }
+        }
+    </script>
+</apex:page>

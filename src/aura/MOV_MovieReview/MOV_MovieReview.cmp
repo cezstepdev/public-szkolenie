@@ -1,0 +1,50 @@
+<aura:component description="MOV_MovieReview" controller="MOV_MovieReview">
+    <aura:attribute name="movie" type="Object"/>
+    <aura:attribute name="movieReviews" type="MovieReview__c[]" access="private"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.movie}" action="{!c.doInit}"/>
+    <aura:handler event="c:MOV_MovieReviewAdded" action="{!c.doInit}"/>
+    <lightning:card title="Reviews">
+        <ui:scrollerWrapper class="scrollWrapper">
+            <ul class="slds-feed__list">
+                <aura:iteration items="{!v.movieReviews}" var="movieReview">
+                    <li class="slds-feed__item" style="padding: 0px">
+                        <article class="slds-post">
+                            <header class="slds-post__header slds-media">
+                                <div class="slds-media__body">
+                                    <div>
+                                        <p>
+                                            <a href="javascript:void(0);"
+                                               title="{!movieReview.CreatedBy.Name}"
+                                               data-userid="{!movieReview.CreatedBy.Id}"
+                                               onclick="{!c.onUserInfoClick}">
+                                                    {!movieReview.CreatedBy.Name}
+                                            </a>
+                                        </p>
+                                        <p>
+                                            <lightning:formattedDateTime value="{!movieReview.CreatedDate}"/>&nbsp;
+                                            <lightning:formattedDateTime value="{!movieReview.CreatedDate}" hour="numeric"
+                                                                         minute="numeric" second="numeric"/>
+                                        </p>
+                                        <p style="margin-left: -5px">
+                                            <c:FiveStarRating value="{!movieReview.Rating__c}" readonly="true"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="slds-post__content slds-text-longform" style="display: flex">
+                                <lightning:formattedRichText value="{!movieReview.Comment__c}"/>
+                            </div>
+                        </article>
+                    </li>
+                </aura:iteration>
+            </ul>
+        </ui:scrollerWrapper>
+        <aura:if isTrue="{!v.movieReviews.length==0}">
+            <div class="slds-align_absolute-center">
+                No reviews available
+            </div>
+        </aura:if>
+    </lightning:card>
+</aura:component>

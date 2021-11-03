@@ -1,0 +1,18 @@
+<aura:component description="GroupsList">
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:layout multipleRows="true">
+        <aura:if isTrue="{!v.data}">
+            <div style="max-height: 300px;">
+                <lightning:datatable
+                        keyField="id"
+                        data="{! v.data }"
+                        columns="{! v.columns }"
+                        resizeColumnDisabled="true"
+                        hideCheckboxColumn="true"/>
+            </div>
+        </aura:if>
+    </lightning:layout>
+</aura:component>

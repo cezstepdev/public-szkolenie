@@ -1,0 +1,32 @@
+<aura:component description="MOV_MyMovieManagement" implements="flexipage:availableForAllPageTypes" controller="MOV_RatingController">
+    <aura:attribute name="item" type="Object" access="public"/>
+    <aura:attribute name="comment" type="Object" access="public"/>
+
+    <aura:handler event="c:MOV_MovieSelectedItem" action="{!c.onSelectedItem}"/>
+    <aura:registerEvent name="movieChange" type="c:MOV_EventEditMovie"/>
+    <aura:registerEvent name="spinnerHide" type="c:SpinnerHideEvent"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:if isTrue="{!v.item}">
+        <div class="slds-align_absolute-center">
+            <lightning:card title="{!v.item.title}">
+                <aura:set attribute="actions">
+                    <lightning:button value="edit" label="Edit" onclick="{!c.editMovie}"/>
+                    <lightning:button value="delete" label="Delete" onclick="{!c.deleteMovie}"/>
+                </aura:set>
+                <div class="slds-m-right_small slds-m-left_small"
+                     style="display: inline-block; width: 1125px; text-align: center">
+                    Status: {!v.item.status}<br/>
+                    Comment:
+                    <aura:if isTrue="{!v.comment == null}">
+                        Waiting for approval
+                        <aura:set attribute="else">
+                            {!v.comment}<br/>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </lightning:card>
+        </div>
+    </aura:if>
+</aura:component>

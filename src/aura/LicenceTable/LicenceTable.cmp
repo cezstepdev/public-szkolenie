@@ -1,0 +1,55 @@
+<aura:component description="LicenceTable" controller="AURA_OrgInformation">
+    <aura:attribute name="data" type="Object" access="public"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:if isTrue="{!v.data.length > 0}">
+        <div class="slds-table--header-fixed_container slds-m-around_small" style="height:300px;">
+            <div class="slds-scrollable_y" style="height:100%;">
+                <table class="slds-table slds-table_bordered slds-table--header-fixed">
+                    <thead>
+                    <tr class="slds-line-height_reset">
+                        <th scope="col" style="border-right: black;">
+                            <div class="slds-truncate slds-cell-fixed slds-p-top_x-small slds-p-left_x-small" title="License Name">License Name</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate slds-cell-fixed slds-p-top_x-small slds-p-left_x-small" title="Used">Used Licenses</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate slds-cell-fixed slds-p-top_x-small slds-p-left_x-small" title="Total">Total Licenses</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate slds-cell-fixed slds-p-top_x-small slds-p-left_x-small" title="Usage">Usage</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <aura:iteration items="{!v.data}" var="licence">
+                        <tr class="slds-hint-parent">
+                            <td data-label="Account Name">
+                                <div class="slds-truncate">{!licence.Name}</div>
+                            </td>
+                            <td data-label="Close Date">
+                                <div class="slds-truncate">{!licence.UsedLicenses}</div>
+                            </td>
+                            <td data-label="Prospecting">
+                                <div class="slds-truncate">{!licence.TotalLicenses}</div>
+                            </td>
+                            <td data-label="Confidence" width="30%">
+                                <div class="slds-truncate">
+                                    <lightning:progressBar value="{!licence.Percent}"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <aura:set attribute="else">
+            <lightning:layoutItem class="slds-align_absolute-center" flexibility="auto" padding="around-small">
+                <ui:outputText value="No licence found"/>
+            </lightning:layoutItem>
+        </aura:set>
+    </aura:if>
+
+</aura:component>

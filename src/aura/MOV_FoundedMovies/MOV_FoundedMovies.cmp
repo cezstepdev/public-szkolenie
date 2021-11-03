@@ -1,0 +1,22 @@
+<aura:component description="MOV_FoundedMovies" implements="flexipage:availableForAllPageTypes"
+                controller="MOV_SearchController">
+    <aura:handler event="c:MOV_EventItemSearchParameter" action="{!c.onParameterGet}"/>
+    <aura:handler event="c:MOV_EventItemClick" action="{!c.onItemClick}"/>
+
+    <aura:attribute name="parameter" type="String" access="public"/>
+    <aura:attribute name="item" type="Object[]" access="public"/>
+
+    <aura:if isTrue="{!v.item.length > 0}">
+        <c:MOV_MovieList item="{!v.item}"/>
+<!--        <aura:set attribute="else">-->
+<!--            <div class="slds-align_absolute-center">-->
+<!--                <lightning:card title="Movies">-->
+<!--                    <div style="width: 1150px" class="slds-align_absolute-center">-->
+<!--                        There is nothing to show-->
+<!--                    </div>-->
+<!--                </lightning:card>-->
+<!--            </div>-->
+<!--        </aura:set>-->
+    </aura:if>
+    <c:Spinner aura:id="spinner"/>
+</aura:component>

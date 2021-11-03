@@ -1,0 +1,31 @@
+<aura:component description="MOV_MovieItem" controller="MOV_SearchController">
+    <aura:attribute name="movie" type="Object" access="public"/>
+    <aura:attribute name="cast" type="Object[]" access="public"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:registerEvent name="appEvent" type="c:MOV_EventItemClick"/>
+    <aura:registerEvent name="movieSelect" type="c:MOV_MovieSelectedItem"/>
+<!--    <aura:handler event="c:MOV_EventEditMovie" action="{!c.onImageClick}" />-->
+
+
+        <lightning:button class="tile" onclick="{!c.onImageClick}">
+            <div style="{!'background-image: url(' + v.movie.image + ')'}" class="innerTile">
+                <div class="upper-third">
+                    <aura:if isTrue="{!v.movie.status == 'Approved'}">
+                        <lightning:icon iconName="action:approval" alternativeText="Approved" title="Approved" size="xx-small"/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.movie.status == 'Rejected'}">
+                        <lightning:icon iconName="action:close" alternativeText="Rejected" title="Rejected" size="xx-small"/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.movie.status == 'Submit'}">
+                        <lightning:icon iconName="action:submit_for_approval" alternativeText="Submit" title="Submit" size="xx-small"/>
+                    </aura:if>
+                </div>
+                <div class="lower-third">
+                    <h1 class="slds-truncate">{!v.movie.title}</h1>
+                </div>
+            </div>
+        </lightning:button>
+    <c:Spinner aura:id="spinner"/>
+</aura:component>

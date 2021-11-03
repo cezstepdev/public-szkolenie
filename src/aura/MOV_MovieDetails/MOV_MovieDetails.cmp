@@ -1,0 +1,140 @@
+<aura:component description="MOV_MovieDetails" controller="MOV_RatingController"
+                implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="item" type="Object" access="public"/>
+    <aura:attribute name="comment" type="Object" access="public"/>
+    <aura:attribute name="averageRating" type="Decimal" access="public"/>
+    <aura:attribute name="cast" type="Object[]" access="public"/>
+
+    <aura:handler event="c:MOV_MovieSelectedItem" action="{!c.onSelectedItem}"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:if isTrue="{!v.item != null}">
+        <div class="slds-align_absolute-center">
+            <lightning:card>
+                <aura:set attribute="title">
+                    <span class="title">
+                        <span>
+                                {!v.item.title}
+                        </span>
+                    </span>
+                </aura:set>
+                <div style="width: 1150px">
+                    <aura:if isTrue="{!v.item.status != null}">
+                        <div style="right: 0; position: absolute; margin-right: 89px; margin-top: -9px; display: flex">
+                            <div style="padding-right: 5px">
+                                <lightning:buttonIconStateful
+                                        iconName="utility:edit"
+                                        selected="{! v.liked}"
+                                        onclick="{! c.editMovie }"
+                                        disabled="{! v.disliked}"
+                                        alternativeText="Edit movie"/>
+                            </div>
+                            <lightning:buttonIconStateful
+                                    iconName="utility:delete"
+                                    selected="{! v.liked}"
+                                    onclick="{! c.deleteMovie }"
+                                    disabled="{! v.disliked}"
+                                    alternativeText="Delete movie"/>
+                        </div>
+                    </aura:if>
+
+                    <div style="float: right; margin-top: -25px">
+                        <c:MOV_MovieEvaluationButtons item="{!v.item}"/>
+                    </div>
+                    <div class="slds-m-around_small" style="display: flex">
+                        <div class="slds-m-right_small">
+                            <img src="{!v.item.image}" style="object-fit:cover;
+                                                     width:300px;
+                                                     height:300px;
+                                                     border: solid 1px #CCC"/>
+                        </div>
+
+                        <div style="max-width: 500px; width: 500px;">
+                            <lightning:layout>
+                                <lightning:layoutItem size="10">
+                                    <div class="detailElement">
+                                        <span class="slds-form-element__label">Budget</span>
+                                        <aura:if isTrue="{!v.item.budget == null}">
+                                            <span>-</span>
+                                            <aura:set attribute="else">
+                                                <span>{!v.item.budget}$</span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </lightning:layoutItem>
+                                <aura:if isTrue="{!v.item.status != null}">
+                                    <lightning:layoutItem>
+                                        <div class="detailElement">
+                                            <span class="slds-form-element__label">Status</span>
+                                                {!v.item.status}
+                                        </div>
+                                    </lightning:layoutItem>
+                                </aura:if>
+                            </lightning:layout>
+                            <lightning:layout>
+                                <lightning:layoutItem size="10">
+                                    <div class="detailElement">
+                                        <span class="slds-form-element__label">Rating</span>
+                                        <span>
+                                    <lightning:formattedNumber value="{!v.averageRating}" style="decimal"
+                                                               minimumFractionDigits="1"/>
+                                    <span style="margin-top: -5px">
+                                        <lightning:icon iconName="utility:favorite"
+                                                        alternativeText="Average Rating"
+                                                        title="Average Rating"
+                                                        size="x-small"/>
+                                    </span>
+                                </span>
+                                    </div>
+                                </lightning:layoutItem>
+                                <aura:if isTrue="{!v.item.status != null}">
+                                    <lightning:layoutItem>
+                                        <div class="detailElement">
+                                            <span class="slds-form-element__label">Comment</span>
+                                            <span>
+                                                    <aura:if isTrue="{!v.comment == null}">
+                                                        Waiting for approval
+                                                        <aura:set attribute="else">
+                                                            {!v.comment}<br/>
+                                                        </aura:set>
+                                                    </aura:if>
+                                            </span>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </aura:if>
+                            </lightning:layout>
+
+                            <div class="detailElement">
+                                <span class="slds-form-element__label">Release Date</span>
+                                <aura:if isTrue="{!v.item.releaseDate == null}">
+                                    <span>-</span>
+                                    <aura:set attribute="else">
+                                        <span>{!v.item.releaseDate}</span>
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                            <div class="detailElement">
+                                <span class="slds-form-element__label">Description</span>
+                                <aura:if isTrue="{!v.item.description == null}">
+                                    <span>-</span>
+                                    <aura:set attribute="else">
+                                        <span>{!v.item.description}</span>
+                                    </aura:set>
+                                </aura:if>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line">
+                    </div>
+                    <c:MOV_ActorList item="{!v.cast}"/>
+                    <div class="line">
+                    </div>
+                    <c:MOV_Rating item="{!v.item}"/>
+                </div>
+            </lightning:card>
+        </div>
+    </aura:if>
+    <c:Spinner aura:id="spinner"/>
+</aura:component>

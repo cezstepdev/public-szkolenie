@@ -1,0 +1,22 @@
+<aura:component description="SearcherForm" implements="flexipage:availableForAllPageTypes">
+    <aura:handler name="AccountGet" event="c:AccountGet" action="{!c.onAccountGet}"/>
+    <aura:attribute name="accounts" type="object[]" access="public"/>
+
+    <lightning:layout>
+        <lightning:layoutItem size="12" class="slds-grid_overflow">
+            <div class="slds-card form">
+                <c:SearchForm/>
+            </div>
+            <lightning:layoutItem size="4">
+                <div class="slds-card list">
+                    <c:SearchList accounts="{!v.accounts}"/>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="8">
+                <div class="slds-card">
+                    <c:AccountsMap accounts="{!v.accounts}"/>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

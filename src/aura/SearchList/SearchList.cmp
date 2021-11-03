@@ -1,0 +1,60 @@
+<aura:component description="SearchList" implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="accounts" type="Account[]" access="public"/>
+    <aura:attribute name="selectedAccountId" type="Integer" access="public"/>
+
+    <aura:handler event="c:AccountGet" action="{!c.onAccountGet}"/>
+    <aura:handler event="c:ReloadAccount" action="{!c.reloadAccount}"/>
+
+    <lightning:card
+            title="Accounts"
+            iconName="standard:apps_admin">
+        <aura:set attribute="actions">
+            <lightning:helptext content="You can click on row to see more details" class="slds-float_right"/>
+        </aura:set>
+        <lightning:layout multipleRows="true">
+            <aura:if isTrue="{!v.accounts.length > 0}">
+                <div class="slds-table--header-fixed_container slds-m-left_small slds-m-right_small"
+                     style="height:17rem; width: 100%">
+                    <div class="slds-scrollable_y" style="height:100%; width: 100%">
+                        <table class="slds-table slds-table_bordered slds-table--header-fixed">
+                            <thead>
+                            <tr class="slds-line-height_reset">
+                                <th scope="col">
+                                    <div class="slds-truncate slds-cell-fixed slds-p-top_x-small slds-p-left_x-small"
+                                         title="Account Name">Account Name
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate slds-cell-fixed slds-p-top_x-small slds-p-left_x-small"
+                                         title="Billing country">Billing Country
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <aura:iteration items="{!v.accounts}" var="account">
+                                <tr class="{!(account.Id == v.selectedAccountId) ? 'myClass' : ''}"
+                                    data-id="{!account.Id}"
+                                    onclick="{!c.onRowClick}">
+                                    <td data-label="Account Name">
+                                        <div class="slds-truncate">{!account.Name}</div>
+                                    </td>
+                                    <td data-label="Billing Country">
+                                        <div class="slds-truncate">{!account.BillingCountry}</div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <aura:set attribute="else">
+                    <lightning:layoutItem class="slds-align_absolute-center" flexibility="auto" padding="around-small">
+                        <ui:outputText value="No accounts found"/>
+                    </lightning:layoutItem>
+                </aura:set>
+            </aura:if>
+        </lightning:layout>
+    </lightning:card>
+</aura:component>

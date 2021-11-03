@@ -1,0 +1,13 @@
+<aura:component description="MOV_MovieEditModal">
+    <aura:attribute name="item" type="Object" access="public"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <lightning:recordForm
+            recordId = "{!v.item.id}"
+            objectApiName="Movie__c"
+            layoutType="Full"
+            mode="edit"
+            onsuccess="{!c.handleSuccess}"
+            oncancel="{!c.handleError}"/>
+</aura:component>

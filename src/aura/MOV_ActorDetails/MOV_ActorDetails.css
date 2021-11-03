@@ -1,0 +1,29 @@
+.THIS .slds-icon-text-default {
+    margin-top: -5px;
+    fill: gold;
+}
+
+.THIS .detailElement {
+    margin-bottom: 3px;
+    display: grid;
+}
+
+.THIS .rating {
+    margin-left: 10px;
+}
+
+.THIS .title {
+    font-size: 1.4rem;
+}
+
+.THIS .slds-form-element__label {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.THIS .line {
+    border-bottom: #CCCCCC solid 1px;
+    padding: 10px;
+    margin: 0px 125px;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,128 @@
+<apex:page id="HP_DoctorChooseImagePicture" controller="HP_DoctorSaveImageController">
+    <style>
+        #chooseLabel {
+            padding: 4px;
+            font-size: .8rem;
+            font-family: Verdana,Arial,sans-serif;
+        }
+
+        .disabled {
+            background-color: gray;
+            cursor: default;
+        }
+
+        .generalInfoContainer {
+            margin-top: 1.5rem;
+            display: flex;
+        }
+
+        #general {
+            flex: 1;
+        }
+    </style>
+    <apex:form>
+        <div style="text-align: center; margin-top: 10px">
+            <input type='file' id="chooseInput" onchange="readURL(event)" hidden="hidden"/>
+            <label class="btn" id="chooseLabel" for="chooseInput">{!$Label.Select_File}</label>
+        </div>
+        <div class="generalInfoContainer" style="justify-content: center">
+            <div id="imageDiv" style="border:1px solid; overflow:hidden; width: 300px; height: 300px; margin-right: 10px">
+            </div>
+            <div class="general">
+                <canvas id="preview" width="300px" height="300px" style="border:1px solid; overflow:hidden;"/><br/>
+            </div>
+        </div>
+        <div id="buttons" style="text-align: center; margin: 10px;">
+            <apex:commandButton id="closeLabel" value="{!$Label.Close_Button}" onclick="closeImgChoose();return false;" reRender="profile_pic_img"/>
+            <apex:commandButton id="saveButton" value="{!$Label.SaveButton}" onclick="saveImage()" disabled="true" style="margin-left: 10px"/>
+        </div>
+    </apex:form>
+    <script type="text/javascript">
+        window.$Label = window.$Label || {};
+        $Label.Wrong_Format = '{!JSENCODE($Label.Wrong_Format)}';
+        $Label.Profile_Picture_URL = '{!JSENCODE($Label.Profile_Picture_URL)}';
+        const saveButton = document.querySelector("[id$='saveButton']");
+        const chooseLabel = document.getElementById("chooseLabel");
+        function readURL(event) {
+            let input = event.target;
+            let file = input.files[0];
+            if (input.files && input.files[0]) {
+                if(file.size < 3000000 && (file.type == "image/png" || file.type == "image/jpeg")) {
+                    $('#imageDiv').html('<img id="target" class="crop" src="#" alt="your image"/>');
+                    $("#preview").css("display", "block");
+
+                    fileName = input.files[0].name;
+                    let reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#target').attr('src', e.target.result);
+                        $('#target').Jcrop({
+                            onChange : updatePreview,
+                            onSelect : updatePreview,
+                            allowSelect: true,
+                            allowMove: true,
+                            allowResize: true,
+                            fixedSupport: true,
+                            boxWidth: 300,
+                            boxHeight: 300,
+                            aspectRatio: 1
+                        });
+                    }
+                    reader.readAsDataURL(input.files[0]);
+
+                    $("#chooseInput").prop("disabled", true);
+                    chooseLabel.classList.add("disabled");
+                }
+                else {
+                    input.files = null;
+                    window.alert($Label.Wrong_Format)
+                }
+            }
+        }
+
+        function closeImgChoose() {
+            closeDialog();
+            disableButtons();
+            $('#imageDiv').html('');
+            let input = $('#chooseInput');
+            let canvas = $("#preview");
+            let preview = canvas[0].getContext("2d");
+            input.replaceWith(input.val('').clone(true));
+            preview.clearRect(0, 0, canvas[0].width, canvas[0].height);
+        }
+
+        function updatePreview(preview) {
+            if(parseInt(preview.w) > 0) {
+                saveButton.disabled = false;
+                saveButton.className = 'btn';
+                let imageObj = $("#target")[0];
+                let canvas = $("#preview")[0];
+                let context = canvas.getContext("2d");
+                context.drawImage(imageObj, preview.x, preview.y, preview.w, preview.h, 0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function disableButtons() {
+            $("#chooseInput").prop("disabled", false);
+            saveButton.disabled = true;
+            saveButton.className = 'btn btnDisabled';
+            chooseLabel.classList.remove("disabled");
+        }
+
+        function onSaveResult(result, event) {
+            let btn = document.querySelector("[id$='remove']");
+            btn.className = 'btn';
+            btn.disabled = false;
+            document.getElementById("profile_pic_image").src = $Label.Profile_Picture_URL + result;
+        }
+
+        function saveImage() {
+            let url_string = window.location.href;
+            let url = new URL(url_string);
+            let userId = url.searchParams.get("id");
+            let p1 = $("#preview")[0].toDataURL("image/png").match(/data:(.+);base64,(.+)/);
+            {!$RemoteAction.HP_DoctorSaveImageController.saveImage}(fileName, p1[1], p1[2], userId, onSaveResult);
+            closeImgChoose();
+        }
+    </script>
+</apex:page>

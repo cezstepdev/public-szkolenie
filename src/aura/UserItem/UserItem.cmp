@@ -1,0 +1,22 @@
+<aura:component description="UserItem">
+    <aura:attribute name="user" type="User" access="public"/>
+    <aura:attribute name="details" type="Object" access="public"/>
+
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12">
+            <div class="slds-box" onclick="{!c.onClick}">
+                <p>{!v.user.Id}</p>
+                <p>{!v.user.FirstName}</p>
+                <p>{!v.user.LastName}</p>
+                <p>{!v.user.IsActive}</p>
+
+                <aura:if isTrue="{!v.details != null}">
+                    <p>{!v.details.Country}</p>
+                    <aura:set attribute="else">
+                        <ui:outputText value="No classes found" />
+                    </aura:set>
+                </aura:if>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

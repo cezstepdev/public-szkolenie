@@ -1,0 +1,44 @@
+<aura:component description="MOV_ActorList">
+    <aura:attribute name="item" type="Object[]"/>
+    <aura:attribute name="itemToDisplay" type="Object[]" access="public"/>
+    <aura:attribute name="itemListSize" type="Integer" access="public" default="20"/>
+    <aura:attribute name="page" type="Integer" access="public" default="1"/>
+    <aura:attribute name="pagesCount" type="Integer" access="public" default="1"/>
+    <aura:attribute name="disableFirst" type="Boolean" access="public" default="false"/>
+    <aura:attribute name="disablePrev" type="Boolean" access="public" default="false"/>
+    <aura:attribute name="disableNext" type="Boolean" access="public" default="false"/>
+    <aura:attribute name="disableLast" type="Boolean" access="public" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.item}" action="{!c.doInit}"/>
+
+    <div class="slds-align_absolute-center">
+        <lightning:card title="Actors">
+            <aura:if isTrue="{!v.item.length > 0}">
+                <div class="slds-align_absolute-center slds-m-right_small slds-m-left_small"
+                     style="display: inline-block; width: 1125px; text-align: center">
+                    <aura:iteration items="{!v.itemToDisplay}" var="item">
+                        <c:MOV_ActorItem actor="{#item}"/>
+                    </aura:iteration>
+                </div>
+                <div class="slds-align_absolute-center">
+                    <lightning:button value="prev" label="First" onclick="{!c.onFirstClick}"
+                                      disabled="{!v.disableFirst}"/>
+                    <lightning:button value="prev" label="Prev" onclick="{!c.onPrevClick}" disabled="{!v.disablePrev}"/>
+                    <lightning:button value="next" label="Next" onclick="{!c.onNextClick}" disabled="{!v.disableNext}"/>
+                    <lightning:button value="last" label="Last" onclick="{!c.onLastClick}" disabled="{!v.disableLast}"/>
+                    <div style="position: absolute; right: 80px;">
+                        Page <b>{!v.page}</b> of <b>{!v.pagesCount}</b>
+                    </div>
+                </div>
+                <aura:set attribute="else">
+                    <div class="slds-align_absolute-center slds-m-right_small slds-m-left_small"
+                         style="display: inline-block; width: 1125px; text-align: center">
+                        No actors to display
+                    </div>
+                </aura:set>
+            </aura:if>
+        </lightning:card>
+    </div>
+    <c:Spinner aura:id="spinner"/>
+</aura:component>

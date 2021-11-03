@@ -1,0 +1,89 @@
+<apex:page id="HP_MechanicUpdate" controller="HP_MechanicSearchControllerREST">
+    <apex:slds></apex:slds>
+    <div class="slds-scope">
+        <apex:actionStatus id="addStatus">
+            <apex:facet name="start">
+                <div class="slds-spinner_container">
+                    <div id="mySpinner" role="status" class="slds-spinner slds-spinner_small">
+                        <span class="slds-assistive-text"></span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:form>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Create Record</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div id="dialog" style="text-align: center;">
+                            <div id="addAlertError" class="slds-notify slds-notify_toast slds-theme_error"
+                                 role="alertdialog" style="justify-content: center;"/>
+                        </div>
+                        <div class="slds-grid slds-wrap" styleClass="slds-text-align_center">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-box_x-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1">
+                                        <abbr class="slds-required" title="required">* </abbr>{!$Label.FirstNameHeader}</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField id="first" styleClass="slds-input" value="{!mechanic.First_Name__c}"
+                                                         required="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-box_x-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1">
+                                        <abbr class="slds-required" title="required">* </abbr>{!$Label.LastNameHeader}</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField id="name" styleClass="slds-input" value="{!mechanic.Name}"
+                                                         required="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-box_x-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1">{!$Label.CountryHeader}</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField id="addNation" styleClass="slds-input" value="{!mechanic.Nation__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-box_x-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1">{!$Label.EmailHeader}</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField id="addMail" styleClass="slds-input" value="{!mechanic.Email__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-box_x-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1">{!$Label.Phone}</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField id="addPhone" styleClass="slds-input" value="{!mechanic.Phone__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <apex:commandButton value="{!$Label.SaveButton}" styleClass="slds-button slds-button_brand"
+                                            action="{!saveMechanic}" reRender="form, modal-content-id-1" status="addStatus"
+                                            onComplete="addDialog('{!errorMsg}', '{!messageType}'); return false;"/>
+                        <apex:commandButton value="{!$Label.Close_Button}" styleClass="slds-button slds-button_outline-brand"
+                                                action="{!clearMechanic}"
+                                                reRender="none"
+                                                html-formnovalidate="novalidate"
+                                                onclick="closeAddDialog(); return false;"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </apex:form>
+    </div>
+</apex:page>

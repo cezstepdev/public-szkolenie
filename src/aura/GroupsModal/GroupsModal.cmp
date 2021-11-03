@@ -1,0 +1,18 @@
+<aura:component>
+    <aura:attribute name="groups" type="GroupMember[]" access="public"/>
+
+    <lightning:layout class="slds-m-around_small">
+        <lightning:layoutItem size="12">
+            <aura:if isTrue="{!v.groups.length > 0}">
+                <div class="slds-box_border">
+                    <c:GroupsList data="{!v.groups}"/>
+                </div>
+                <aura:set attribute="else">
+                    <lightning:layoutItem class="slds-align_absolute-center">
+                        <ui:outputText value="No groups found" />
+                    </lightning:layoutItem>
+                </aura:set>
+            </aura:if>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

@@ -1,0 +1,67 @@
+<apex:page controller="HP_DoctorImportController">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"/>
+    <apex:form id="form">
+        <apex:pagemessages id="messages"/>
+        <apex:pageBlock title="Import Doctors">
+            <div style="text-align: center">
+                <apex:inputFile value="{!csvFileBody}" filename="{!csvAsString}" accept=".csv"/>
+                <apex:actionSupport event="onchange" reRender="load_data"/>
+                <apex:actionRegion>
+                    <apex:commandButton id="load_data" value="Open" action="{!openCSV}" disabled="{!!disable}"/>
+                    <apex:actionSupport reRender="pageBlockSection,load_data" event="onclick"/>
+                </apex:actionRegion>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:actionRegion>
+        <apex:form id="pageBlockSection">
+            <apex:pageBlock rendered="{!doctorList.size!=0}">
+                <apex:pageblocktable id="doctorTable" value="{!doctorsWrappers}" var="doctorWrapperList">
+                    <apex:column headerValue="Select">
+                        <apex:inputCheckbox value="{!doctorWrapperList.selected}"/>
+                    </apex:column>
+                    <apex:column value="{!doctorWrapperList.doctor.FirstName__c}" />
+                    <apex:column value="{!doctorWrapperList.doctor.Name}" />
+                    <apex:column value="{!doctorWrapperList.doctor.Email__c}" />
+                    <apex:column value="{!doctorWrapperList.doctor.Country__c}" />
+                    <apex:column headerValue="Status" width="20%">
+                        <apex:outputText value="{!doctorWrapperList.status}"/>
+                        <apex:outputPanel rendered="{!doctorWrapperList.URL != ''}">
+                            <a href="{!doctorWrapperList.URL}" target="_blank"> VIEW</a>
+                        </apex:outputPanel>
+                    </apex:column>
+                </apex:pageblocktable>
+                <apex:pagemessages/>
+                <div style="margin-top: 5px">
+                    <apex:commandButton value="All" action="{!checkAll}" reRender="pageBlockSection"/>
+                    <apex:commandButton value="None" action="{!uncheckAll}" reRender="pageBlockSection"/>
+                    <apex:commandButton value="Reverse" action="{!reverseSelected}" reRender="pageBlockSection"/>
+                    <div style="float: right">
+                        <apex:commandButton value="Import" action="{!importRecords}" reRender="pageBlockSection"/>
+                        <apex:commandButton action="{!clear}" value="{!$Label.ClearButton}"
+                                            status="status" reRender="pageBlockSection"/>
+                    </div>
+                </div>
+            </apex:pageBlock>
+            <apex:actionStatus id="status">
+                <apex:facet name="start">
+                    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000;
+                    background-color: black;">
+                        &nbsp;
+                    </div>
+                    <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                        <img src="{!$Resource.VistaSpinner}"/>
+                    </div>
+                </apex:facet>
+            </apex:actionStatus>
+        </apex:form>
+    </apex:actionRegion>
+    <script>
+        function changeFile() {
+            const saveButton = document.querySelector("[id$='openButton']");
+            saveButton.className = 'btn';
+            saveButton.disabled = false;
+        }
+    </script>
+</apex:page>

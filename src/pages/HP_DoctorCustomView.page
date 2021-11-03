@@ -1,0 +1,173 @@
+<apex:page id="HP_CustomDoctorView" standardController="Doctor__c" extensions="HP_DoctorCustomViewController">
+    <style>
+        #map {
+            font-family: Arial;
+            font-size: 12px;
+            line-height: normal !important;
+            height: 250px;
+            margin-bottom: 10px;
+            z-index: 0;
+        }
+
+        .displayNone {
+            display: none;
+        }
+
+        .justifyElements .pbSubsection {
+            margin-left: 142px;
+        }
+
+        .ui-dialog-titlebar-close {
+            display: none;
+        }
+    </style>
+    <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css"/>
+    <apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/start/jquery-ui.css"/>
+    <apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/0.9.15/js/jquery.Jcrop.min.js"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"/>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqTxQuvrH5P3iTCk7Ks2O9U9WZwYeYI4o"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"/>
+
+    <div id="cropDiv" style="display: none;">
+        <apex:outputPanel>
+           <apex:include pageName="HP_DoctorChooseImagePicture"/>
+        </apex:outputPanel>
+    </div>
+    <div class="bPageTitle">
+        <img src="/img/s.gif" class="pageTitleIcon"/>
+        <h1 class="pageType">{!$Label.DoctorTitle}</h1>
+        <h2 class="pageDescription" style="font-size: 21px">{!Doctor__c.Name}</h2>
+    </div>
+    <apex:form id="form">
+        <apex:pageBlock id="pageBlock" title="{!$Label.DoctorDetailTitle}">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="{!$Label.EditButton}" action="{!edit}"/>
+                <apex:commandButton value="{!$Label.DeleteButton}" action="{!delete}"/>
+                <apex:commandButton value="{!$Label.CloneButton}" action="{!URLFOR($Action.Doctor__c.Clone,Doctor__c.Id)}"/>
+            </apex:pageBlockButtons>
+            <div class="generalInfoContainer">
+                <div id="profilePic" style="padding-right: 10px;">
+                    <div id="profileImg">
+                        <img id="profile_pic_image" src="{!Doctor__c.Profile_Picture__c}" width="132px" height="132px"/>
+                    </div>
+                    <div id="profileButtons">
+                        <apex:commandButton id="change" value="Change" onClick="openCrop(); return false;" style="margin: 10px"/>
+                        <apex:commandButton id="remove" value="Remove" onClick="confirmRemove(); return false;"/>
+                    </div>
+                </div>
+                <div id="general">
+                    <apex:pageBlockSection title="{!$Label.GeneralTitle}" id="generalInfo">
+                        <apex:outputField value="{!Doctor__c.FirstName__c}"/>
+                        <apex:outputField value="{!Doctor__c.Name}"/>
+                        <apex:outputField value="{!Doctor__c.Email__c}"/>
+                        <apex:outputField value="{!Doctor__c.Birthday__c}"/>
+                        <apex:outputField value="{!Doctor__c.Land__c}"/>
+                        <apex:outputField id="phone" value="{!Doctor__c.Phone__c}">
+                            <apex:commandButton onClick="copyToClipboard('{!$Component.phone}')"
+                                                value="{!$Label.CopyButton}" style="margin-left: 10px" reRender="form"/>
+                        </apex:outputField>
+                    </apex:pageBlockSection>
+                </div>
+            </div>
+            <div style="clear: both" class="justifyElements">
+                <apex:pageBlockSection title="{!$Label.DetailTitle}" id="detailInfo">
+                    <apex:outputField value="{!Doctor__c.City__c}" style="margin-left: 100px"/>
+                    <apex:outputField value="{!Doctor__c.Age__c}"/>
+                    <apex:outputField value="{!Doctor__c.Street__c}"/>
+                    <apex:outputField value="{!Doctor__c.Specialisation__c}"/>
+                    <apex:outputField value="{!Doctor__c.Address__c}"/>
+                    <apex:outputField value="{!Doctor__c.Postal_Code__c}"/>
+                    <apex:outputField value="{!Doctor__c.Receive_Birthday_Emails__c}"/>
+                </apex:pageBlockSection>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+    <div id="map"/>
+
+    <script type="text/javascript">
+        j$ = jQuery.noConflict();
+        window.$Label = window.$Label || {};
+        $Label.ChooseTitle = '{!JSENCODE($Label.ChooseTitle)}';
+        $Label.defaultImage = '{!JSENCODE($Label.Default_Profile_Picture)}';
+        $(document).ready(function () {
+            let geocoder = new google.maps.Geocoder();
+            let address = "{!Doctor__c.City__c}, {!Doctor__c.Street__c}, {!Doctor__c.Address__c}";
+            geocoder.geocode({address: address}, function (results, status) {
+                if(status == google.maps.GeocoderStatus.OK && results.length) {
+                    let latitude = results[0].geometry.location.lat();
+                    let longitude = results[0].geometry.location.lng()
+                    let map = L.map('map').setView([latitude, longitude], 14);
+                    let mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+                    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; ' + mapLink + ' Contributors',
+                                maxZoom: 18,
+                            }
+                    ).addTo(map);
+                    L.marker([latitude, longitude])
+                            .addTo(map)
+                            .bindPopup("<b>{!Doctor__c.Name}</b>");
+                }
+                else {
+                    j$('[id$=map]').addClass("displayNone");
+                }
+            });
+
+            let imgURL = $('#profileImg').children('img').prop('src');
+            if(imgURL == $Label.defaultImage) {
+                let btn = document.querySelector("[id$='remove']");
+                btn.className = 'btn btnDisabled';
+                btn.disabled = 'disabled';
+            }
+        });
+
+        function copyToClipboard(elementId) {
+            let aux = document.createElement("input");
+            aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+            document.body.appendChild(aux);
+            aux.select();
+            document.execCommand("copy");
+        }
+
+        function openCrop() {
+            j$('#cropDiv').dialog({
+                autoOpen: true,
+                width: 800,
+                height: 580,
+                modal: true,
+                title: $Label.ChooseTitle
+            });
+            j$('#cropDiv').display = "block";
+        }
+
+        function closeDialog() {
+            j$('#cropDiv').dialog('close');
+        }
+
+        function confirmRemove() {
+            let proceed = confirm("Are you sure you want to proceed?");
+            if (proceed) {
+                let btn = document.querySelector("[id$='remove']");
+                btn.className = 'btn btnDisabled';
+                btn.disabled = 'disabled';
+                document.getElementById("profile_pic_image").src = $Label.defaultImage;
+                removeImage();
+            }
+        }
+
+        function onRemoveResult() {
+        }
+
+        function removeImage() {
+
+            let url_string = window.location.href;
+            let url = new URL(url_string);
+            let userId = url.searchParams.get("id");
+            {!$RemoteAction.HP_DoctorCustomViewController.removeImage}(userId, onRemoveResult);
+        }
+    </script>
+    <apex:relatedList list="Contracts__r"/>
+</apex:page>

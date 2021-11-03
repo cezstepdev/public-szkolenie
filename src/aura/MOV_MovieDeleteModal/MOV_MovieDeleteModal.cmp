@@ -1,0 +1,7 @@
+<aura:component description="MOV_MovieDeleteModal">
+    <aura:attribute name="item" type="Object" access="public"/>
+
+    <div class="slds-align_absolute-center slds-m-bottom_small">
+        Do you really want to delete {!v.item.title}?
+    </div>
+</aura:component>

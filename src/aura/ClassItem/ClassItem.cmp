@@ -1,0 +1,10 @@
+<aura:component description="ClassItem">
+    <aura:attribute name="class" type="ApexClass" access="public"/>
+
+    <div class="slds-box">
+        <p>{!v.class.Name}</p>
+        <p>{!v.class.CreatedBy.Name}</p>
+        <p>{!v.class.CreatedDate}</p>
+        <p>{!v.class.ApiVersion}</p>
+    </div>
+</aura:component>

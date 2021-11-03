@@ -1,0 +1,14 @@
+<aura:component description="modalFooter">
+    <aura:attribute name="account" type="Account" access="public"/>
+
+    <force:recordData aura:id="recordHandler"
+                      recordId="{!v.account.Id}"
+                      fields="Id"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <lightning:button label="Close"
+                      variant="Neutral" onclick="{!c.closeDialog}"/>
+    <lightning:button label="Delete"
+                      variant="brand" onclick="{!c.deleteAccount}"/>
+</aura:component>

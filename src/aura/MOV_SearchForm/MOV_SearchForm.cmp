@@ -1,0 +1,32 @@
+<aura:component description="MOV_SearchForm" implements="flexipage:availableForAllPageTypes" controller="MOV_SearchController">
+    <aura:attribute name="parameter" type="String"/>
+    <aura:attribute name="disableButton" type="Boolean" default="true"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="SearchParameter" type="c:MOV_EventItemSearchParameter"/>
+
+    <div class="slds-align_absolute-center">
+    <lightning:card title="Search">
+        <div style="width: 1150px">
+            <form class="slds-form-element_stacked">
+                <div style="display: flex; align-items: flex-end; justify-content: center">
+                    <lightning:input aura:id="searchInput"
+                                     label="Search film or actor"
+                                     name="itemName" value="{!v.parameter}"
+                                     placeholder="type minimum 3 characters"
+                                     minlength="3"
+                                     class="slds-m-around_small slds-m-top_none inputSize"
+                                     onchange="{!c.onInputChange}"
+                                     messageWhenValueMissing="You need to enter data"/>
+
+                    <lightning:button label="Search"
+                                      class="slds-m-top_medium"
+                                      variant="brand"
+                                      onclick="{!c.getItems}"
+                                      disabled="{!v.disableButton}"/>
+                </div>
+            </form>
+        </div>
+    </lightning:card>
+    </div>
+</aura:component>

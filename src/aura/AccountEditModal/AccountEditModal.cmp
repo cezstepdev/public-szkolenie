@@ -1,0 +1,17 @@
+<aura:component description="AccountEditModal, force:hasRecordId">
+    <aura:attribute name="account" type="Account" access="public"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:registerEvent name="DoSearch" type="c.DoSearch"/>
+
+    <lightning:card>
+        <lightning:notificationsLibrary aura:id="notifLib" />
+        <lightning:recordForm
+                recordId = "{!v.account.Id}"
+                objectApiName="Account"
+                layoutType="Compact"
+                onsuccess="{!c.handleSuccess}"
+                oncancel="{!c.handleError}"
+                mode="edit"/>
+    </lightning:card>
+</aura:component>

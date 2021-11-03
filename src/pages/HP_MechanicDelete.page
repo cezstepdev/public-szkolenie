@@ -1,0 +1,45 @@
+<apex:page id="HP_MechanicDelete" controller="HP_MechanicSearchControllerREST">
+    <apex:slds></apex:slds>
+    <div class="slds-scope">
+        <apex:actionStatus id="deleteStatus">
+            <apex:facet name="start">
+                <div class="slds-spinner_container">
+                    <div id="mySpinner" role="status" class="slds-spinner slds-spinner_small">
+                        <span class="slds-assistive-text"></span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:form>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!$Label.ConfirmationDeletion}</h2>
+                    </header>
+                    <div id="dialog" style="text-align: center;">
+                        <div id="deleteAlertError" class="slds-notify slds-notify_toast slds-theme_error"
+                             role="alertdialog" style="justify-content: center;"/>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" style="text-align: center">
+                        <p>
+                            <apex:outputText id="deleteMechanicForm"
+                                             value="{!$Label.DeleteWarning} {!mechanic.First_Name__c} {!mechanic.Name}?"/>
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <apex:commandButton value="{!$Label.DeleteButton}" styleClass="slds-button slds-button_brand"
+                                            action="{!deleteMechanic}" reRender="form, pbId" status="deleteStatus"
+                                            onComplete="deleteDialog('{!errorMsg}', '{!messageType}'); return false;"/>
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand"
+                                            reRender="form" value="{!$Label.Close_Button}"
+                                            onComplete="closeDeleteDialog(); return false;"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </apex:form>
+    </div>
+</apex:page>

@@ -1,0 +1,12 @@
+<aura:component description="Spinner" implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="displaySpinner" type="Boolean" default="false"/>
+    <aura:method name="showSpinner" action="{!c.showSpinner}"/>
+    <aura:method name="hideSpinner" action="{!c.hideSpinner}"/>
+
+    <aura:handler event="c:SpinnerShowEvent" action="{!c.showSpinner}"/>
+    <aura:handler event="c:SpinnerHideEvent" action="{!c.hideSpinner}"/>
+
+    <aura:if isTrue="{! v.displaySpinner }">
+        <lightning:spinner class="slds-color__background_gray-1 slds-is-fixed" alternativeText="Loading"/>
+    </aura:if>
+</aura:component>

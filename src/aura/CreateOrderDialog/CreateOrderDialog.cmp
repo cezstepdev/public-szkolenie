@@ -1,0 +1,8 @@
+<aura:component description="CreateOrderDialog">
+    <aura:attribute name="message" type="String" access="public"/>
+    <aura:attribute name="id" type="String" access="public"/>
+
+    <div class="slds-align_absolute-center">
+        Check if opportunity has products
+    </div>
+</aura:component>

@@ -1,0 +1,17 @@
+<apex:page controller="HP_DoctorSearchController" contentType="application/vnd.ms-excel#{!$CurrentPage.parameters.fileName}.xls" cache="true"
+           showHeader="false" standardStylesheets="false" sidebar="false">
+    <apex:dataTable value="{!doctors}" var="doctor">
+        <apex:column headerValue="{!doctor.FirstName__c}">
+            <apex:outputField value="{!doctor.FirstName__c}"/>
+        </apex:column>
+        <apex:column headerValue="{!doctor.Name}">
+            <apex:outputField value="{!doctor.Name}"/>
+        </apex:column>
+        <apex:column headerValue="{!doctor.Email__c}">
+            <apex:outputField value="{!doctor.Email__c}"/>
+        </apex:column>
+        <apex:column headerValue="{!doctor.Country__c}">
+            <apex:outputField value="{!doctor.Country__c}"/>
+        </apex:column>
+    </apex:dataTable>
+</apex:page>

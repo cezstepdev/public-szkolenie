@@ -1,0 +1,81 @@
+<apex:page controller="HP_DoctorSearchController">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <apex:form id="form">
+        <apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" status="fetchStatus" reRender="pbId"/>
+        <apex:pageBlock id="pageBlock" title="{!$Label.SearchDoctorTitle}">
+            <apex:pageBlockSection columns="2" id="inputSection">
+                <apex:inputText id="firstName" value="{!doctor.FirstName__c}"/>
+                <apex:inputField id="lastName" value="{!doctor.Name}" required="true"/>
+                <apex:inputText id="email" value="{!doctor.Email__c}"/>
+                <apex:inputText id="country" value="{!doctor.Country__c}"/>
+            </apex:pageBlockSection>
+            <div align="center">
+                <apex:commandButton action="{!searchDoctor}" value="{!$Label.SearchButton}" status="status" reRender="form"/>
+                <apex:actionRegion>
+                    <apex:commandButton action="{!clear}" onComplete="clear()" value="{!$Label.ClearButton}" status="status"
+                                        reRender="form"/>
+                </apex:actionRegion>
+            </div>
+        </apex:pageBlock>
+        <apex:pageBlock id="pbId" rendered="{!doctors.size != 0}">
+            <apex:pageBlockSection title="{!$Label.SearchedDoctorsTitle}" collapsible="false" columns="1">
+                <apex:pageBlockTable value="{!doctorsList}" var="doctor" id="doctorTable">
+                    <apex:column headerValue="{!$Label.FirstNameHeader}">
+                        <apex:outputField value="{!doctor.FirstName__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.LastNameHeader}">
+                        <apex:outputField value="{!doctor.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.EmailHeader}">
+                        <apex:outputField value="{!doctor.Email__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.CountryHeader}">
+                        <apex:outputField value="{!doctor.Country__c}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                <apex:panelGrid columns="8">
+                    <apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize()">
+                        <apex:selectOptions value="{!paginationSizeOptions}"/>
+                    </apex:selectList>
+                    <apex:commandButton status="fetchStatus" reRender="pbId" value="{!$Label.FirstPage}" action="{!setCon.first}"
+                                        disabled="{!!setCon.hasPrevious}"/>
+                    <apex:commandButton status="fetchStatus" reRender="pbId" value="{!$Label.PreviousPage}"
+                                        action="{!setCon.previous}" disabled="{!!setCon.hasPrevious}"/>
+                    <apex:commandButton status="fetchStatus" reRender="pbId" value="{!$Label.NextPage}" action="{!setCon.next}"
+                                        disabled="{!!setCon.hasNext}"/>
+                    <apex:commandButton status="fetchStatus" reRender="pbId" value="{!$Label.LastPage}" action="{!setCon.last}"
+                                        disabled="{!!setCon.hasNext}"/>
+                    <apex:outputPanel>
+                        <apex:actionStatus id="fetchStatus">
+                            <apex:facet name="start">
+                                <img src="/img/loading.gif"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                    <apex:commandButton value="Export CSV" action="{!exportToCSV}"/>
+                    <apex:commandButton value="Export XLS" action="{!exportToXLS}"/>
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="{!$Resource.VistaSpinner}"/>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+    </apex:form>
+    <script>
+        j$ = jQuery.noConflict();
+
+        function clear() {
+            j$('[id$=firstName]').val(" ");
+            j$('[id$=lastName]').val(" ");
+            j$('[id$=email]').val(" ");
+            j$('[id$=country]').val(" ");
+        }
+    </script>
+</apex:page>

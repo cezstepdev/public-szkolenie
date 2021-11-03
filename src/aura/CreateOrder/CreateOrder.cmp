@@ -1,0 +1,56 @@
+<aura:component description="CreateOrder" controller="OTO_OpportunityToOrder"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride"
+                access="global">
+    <aura:attribute name="recordId" type="Id" default=""/>
+    <aura:attribute name="isButtonActive" type="Boolean" default="true"/>
+    <aura:attribute name="order" type="Object"/>
+    <aura:attribute name="quotes" type="Boolean"/>
+    <aura:attribute name="stage" type="Boolean"/>
+    <aura:attribute name="products" type="Boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div class="slds-align_absolute-center" style="margin-top: 15px; margin-bottom: 15px">
+        <aura:if isTrue="{!!v.products}">
+            This opportunity has no products.
+            <aura:set attribute="else">
+                <aura:if isTrue="{!!v.quotes}">
+                    This Opportunity has no accepted quotes.
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!!v.stage}">
+                            This Opportunity has no closed won.
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!!v.isButtonActive}">
+                                    Do you want to convert this record to Order?
+                                    <aura:set attribute="else">
+                                        This opportunity already have order.
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+            </aura:set>
+        </aura:if>
+    </div>
+    <div class="slds-align_absolute-center" style="position: absolute;bottom: 355px;right: 90px;">
+        <lightning:button variant="neutral" label="Create Order" title="Convert" onclick="{! c.createOrderAction }"
+                          disabled="{!v.isButtonActive}"/>
+    </div>
+    <c:Spinner/>
+</aura:component>

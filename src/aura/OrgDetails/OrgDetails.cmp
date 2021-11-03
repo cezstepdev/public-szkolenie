@@ -1,0 +1,21 @@
+<aura:component description="OrgDetails" controller="AURA_OrgInformation">
+    <aura:attribute name="ORG" type="object" access="public"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div>
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Field 3">ORG URL</p>
+                    <p>{!v.ORG.URL}</p>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Field 1">Instance</p>
+                    <p>{!v.ORG.instance}</p>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

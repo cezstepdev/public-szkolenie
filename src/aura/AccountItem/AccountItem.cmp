@@ -1,0 +1,18 @@
+<aura:component description="AccountItem">
+    <aura:attribute name="account" type="Object" access="public"/>
+    <div class="slds-box">
+        <lightning:layout>
+                <div class="slds-p-horizontal--small">
+                    <div>
+                        <span class="label">Name: {!v.account.Name}</span>
+                        <span></span>
+                    </div>
+                    <div>
+                        <span class="label">Country: {!v.account.ShippingCountry}</span>
+                        <span></span>
+                    </div>
+                </div>
+        </lightning:layout>
+    </div>
+
+</aura:component>

@@ -1,0 +1,18 @@
+<aura:component description="MOV_MainBox" implements="flexipage:availableForAllPageTypes">
+    <lightning:card>
+        <lightning:tabset>
+            <lightning:tab label="Actor Search" onactive="{! c.handleActive }">
+                <c:MOV_SearchForm/>
+                <c:MOV_ActorFounded/>
+                <c:MOV_ActorDetails/>
+                <c:MOV_MovieDetails/>
+            </lightning:tab>
+            <lightning:tab label="Movie Search" onactive="{! c.handleActive }">
+                <c:MOV_SearchForm/>
+                <c:MOV_FoundedMovies/>
+                <c:MOV_MovieDetails/>
+                <c:MOV_ActorDetails/>
+            </lightning:tab>
+        </lightning:tabset>
+    </lightning:card>
+</aura:component>

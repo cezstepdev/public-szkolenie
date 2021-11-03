@@ -1,0 +1,11 @@
+<aura:component description="MOV_PopularMovies" implements="flexipage:availableForAllPageTypes"
+                controller="MOV_SearchController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="item" type="Object[]"/>
+
+    <lightning:card title="Maybe You Like">
+        <aura:if isTrue="{!v.item.length > 0}">
+            <c:MOV_MovieList item="{!v.item}"/>
+        </aura:if>
+    </lightning:card>
+</aura:component>

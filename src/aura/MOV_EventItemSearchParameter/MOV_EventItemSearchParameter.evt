@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="MOV_EventItemSearchParameter">
+    <aura:attribute name="parameter" type="String"/>
+</aura:event>

@@ -1,0 +1,18 @@
+<aura:component>
+    <aura:attribute name="history" type="LoginHistory[]" access="public"/>
+
+    <lightning:layout class="slds-m-around_small">
+        <lightning:layoutItem size="12">
+            <aura:if isTrue="{!v.history.length > 0}">
+                <div class="slds-box_border">
+                    <c:LoginHistory data="{!v.history}"/>
+                </div>
+                <aura:set attribute="else">
+                    <lightning:layoutItem class="slds-align_absolute-center">
+                        <ui:outputText value="No login history found" />
+                    </lightning:layoutItem>
+                </aura:set>
+            </aura:if>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

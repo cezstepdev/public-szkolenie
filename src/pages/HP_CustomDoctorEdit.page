@@ -1,0 +1,36 @@
+<apex:page id="HP_CustomDoctorEdit" standardController="Doctor__c" extensions="HP_DoctorCustomEditController">
+    <div class="bPageTitle">
+        <img src="/img/s.gif" class="pageTitleIcon"/>
+        <h1 class="pageType">{!$Label.DoctorTitle}</h1>
+        <h2 class="pageDescription" style="font-size: 21px">{!Doctor__c.Name}</h2>
+    </div>
+
+    <apex:form id="form">
+        <apex:pageBlock id="pageBlock" title="{!$Label.DoctorDetailTitle}">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton action="{!save}" value="{!$Label.SaveButton}"/>
+                <apex:commandButton action="{!doSaveAndNew}" value="{!$Label.Save_NewButton}"/>
+                <apex:commandButton action="{!cancel}" value="Cancel"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection  title="{!$Label.GeneralTitle}" id="generalInfo">
+                <apex:inputField value="{!Doctor__c.FirstName__c}"/>
+                <apex:inputField value="{!Doctor__c.Name}"/>
+                <apex:inputField value="{!Doctor__c.Email__c}"/>
+                <apex:inputField value="{!Doctor__c.Phone__c}"/>
+                <apex:inputField value="{!Doctor__c.Birthday__c}"/>
+                <apex:inputField value="{!Doctor__c.Land__c}"/>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection  title="{!$Label.DetailTitle}" id="detailInfo">
+                <apex:inputField value="{!Doctor__c.City__c}"/>
+                <apex:inputField value="{!Doctor__c.Age__c}"/>
+                <apex:inputField value="{!Doctor__c.Street__c}"/>
+                <apex:inputField value="{!Doctor__c.Specialisation__c}"/>
+                <apex:inputField value="{!Doctor__c.Address__c}"/>
+                <apex:inputField value="{!Doctor__c.Postal_Code__c}"/>
+                <apex:inputField value="{!Doctor__c.Receive_Birthday_Emails__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

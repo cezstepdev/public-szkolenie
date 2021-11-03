@@ -1,0 +1,2 @@
+<aura:component description="test2" implements="flexipage:availableForAllPageTypes">
+</aura:component>

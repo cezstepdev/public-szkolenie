@@ -1,0 +1,14 @@
+<aura:component description="MOV_ActorItem" controller="MOV_ActorSearchController">
+    <aura:attribute name="actor" type="Object" access="public"/>
+    <aura:attribute name="movies" type="Object[]" access="public"/>
+    <aura:registerEvent name="SelectedItem" type="c:MOV_SelectedItem"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <lightning:button class="tile" onclick="{!c.onImageClick}">
+        <div style="{!'background-image: url(' + v.actor.image + ')'}" class="innerTile">
+            <div class="lower-third">
+                <h1 class="slds-truncate">{!v.actor.name}</h1>
+            </div>
+        </div>
+    </lightning:button>
+</aura:component>

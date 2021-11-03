@@ -1,0 +1,14 @@
+<aura:component description="MOV_MovieDeleteFooter">
+    <aura:attribute name="item" type="Object" access="public"/>
+
+    <force:recordData aura:id="recordHandler"
+                      recordId="{!v.item.id}"
+                      fields="Id"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <lightning:button label="Close"
+                      variant="Neutral" onclick="{!c.closeDialog}"/>
+    <lightning:button label="Delete"
+                      variant="brand" onclick="{!c.deleteAccount}"/>
+</aura:component>

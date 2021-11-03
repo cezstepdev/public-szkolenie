@@ -1,0 +1,47 @@
+<aura:component description="AccountDetails" implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="account" type="Account" access="public"/>
+
+    <aura:handler event="c:AccountSelect" action="{!c.onAccountSelect}"/>
+    <aura:handler event="c:AccountGet" action="{!c.onAccountGet}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:if isTrue="{!v.account != null}">
+        <lightning:card
+                iconName="standard:account"
+                title="{!v.account.Name}">
+            <aura:set attribute="actions">
+                <lightning:button label="Edit"
+                                  variant="neutral" onclick="{!c.editAccount}"/>
+                <lightning:button label="Delete"
+                                  variant="brand" onclick="{!c.deleteAccount}"/>
+            </aura:set>
+
+            <lightning:layout multipleRows="true" class="slds-p-around_small">
+                <lightning:layoutitem size="6">
+                    <span class="slds-form-element__label">Account Phone: </span>
+                    <span>{!v.account.Phone}</span>
+                </lightning:layoutitem>
+                <lightning:layoutitem size="6">
+                    <span class="slds-form-element__label">Billing Street: </span>
+                    <span>{!v.account.BillingStreet}</span>
+                </lightning:layoutitem>
+                <lightning:layoutitem size="6">
+                    <span class="slds-form-element__label">Website: </span>
+                    <span><a href="{!v.account.Website}">{!v.account.Website}</a></span>
+                </lightning:layoutitem>
+                <lightning:layoutitem size="6">
+                    <span class="slds-form-element__label">Billing City: </span>
+                    <span>{!v.account.BillingCity}</span>
+                </lightning:layoutitem>
+                <lightning:layoutitem size="6">
+                    <span class="slds-form-element__label">Account Number: </span>
+                    <span>{!v.account.AccountNumber}</span>
+                </lightning:layoutitem>
+                <lightning:layoutitem size="6">
+                    <span class="slds-form-element__label">Billing Country: </span>
+                    <span>{!v.account.BillingCountry}</span>
+                </lightning:layoutitem>
+            </lightning:layout>
+        </lightning:card>
+    </aura:if>
+</aura:component>

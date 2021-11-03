@@ -1,0 +1,33 @@
+<aura:component description="OrgInformation" implements="flexipage:availableForAllPageTypes">
+
+    <lightning:layout>
+        <lightning:layoutItem size="12">
+            <div class="slds-card slds-m-top_xx-small">
+                <c:OrgDetails/>
+            </div>
+            <div class="slds-card">
+                <lightning:tabset>
+                    <lightning:tab label="Users">
+                        <c:UsersList/>
+                    </lightning:tab>
+
+                    <lightning:tab label="Classes">
+                        <c:ClassList/>
+                    </lightning:tab>
+
+                    <lightning:tab label="Pages">
+                        <c:PagesList/>
+                    </lightning:tab>
+
+                    <lightning:tab label="Licences">
+                        <c:LicenceTable/>
+                    </lightning:tab>
+
+                    <lightning:tab label="Session">
+                        <c:Session/>
+                    </lightning:tab>
+                </lightning:tabset>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

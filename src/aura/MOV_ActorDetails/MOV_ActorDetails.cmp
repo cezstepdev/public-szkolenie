@@ -1,0 +1,49 @@
+<aura:component description="MOV_ActorDetails" implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="item" type="Object" access="public"/>
+    <aura:attribute name="movies" type="Object[]" access="public"/>
+    <aura:handler event="c:MOV_SelectedItem" action="{!c.onSelectedItem}"/>
+
+    <aura:if isTrue="{!v.item != null}">
+        <div class="slds-align_absolute-center">
+            <lightning:card>
+                <aura:set attribute="title">
+                    <span class="title">
+                        <span>
+                                {!v.item.name}
+                        </span>
+                    </span>
+                </aura:set>
+                <div class="slds-m-around_small" style="display: flex">
+                    <div class="slds-m-right_small">
+                        <img src="{!v.item.image}" style="object-fit:cover;
+                                                     width:300px;
+                                                     height:300px;
+                                                     border: solid 1px #CCC"/>
+                    </div>
+                    <div style="width: 500px">
+                        <!--<div style="margin-bottom: 3px">
+                            <span class="slds-form-element__label">Name: </span>
+                            <span>{!v.item.name}</span>
+                        </div>-->
+                        <div class="detailElement">
+                            <span class="slds-form-element__label">Birthday: </span>
+                            <span>{!v.item.birthday}</span>
+                        </div>
+                        <div class="detailElement">
+                            <span class="slds-form-element__label">Place of birth: </span>
+                            <span>{!v.item.place_of_birth}</span>
+                        </div>
+                        <div class="detailElement">
+                            <span class="slds-form-element__label">Biography: </span>
+                            <span>{!v.item.biography}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="line">
+                </div>
+                <c:MOV_MovieList item="{!v.movies}"/>
+            </lightning:card>
+        </div>
+    </aura:if>
+    <c:Spinner aura:id="spinner"/>
+</aura:component>

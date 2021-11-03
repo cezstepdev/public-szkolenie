@@ -1,0 +1,16 @@
+<aura:component description="MOV_Rating" controller="MOV_RatingController">
+    <aura:attribute name="item" type="Object" access="public"/>
+    <aura:attribute name="displayAddReview" type="boolean" default="true"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.item}" action="{!c.doInit}"/>
+    <aura:handler event="c:SpinnerShowEvent" action="{!c.doInit}"/>
+
+    <div style="margin-left: 75px">
+        <aura:if isTrue="{!v.displayAddReview}">
+            <c:MOV_MovieReviewAdd movie="{!v.item}"/>
+        </aura:if>
+        <c:MOV_MovieReview movie="{!v.item}"/>
+
+    </div>
+</aura:component>

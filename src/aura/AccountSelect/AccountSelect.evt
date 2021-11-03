@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="AccountSelect">
+    <aura:attribute name="selectedAccount" type="Object" access="public"/>
+</aura:event>

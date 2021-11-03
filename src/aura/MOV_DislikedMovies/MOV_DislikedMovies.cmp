@@ -1,0 +1,17 @@
+<aura:component description="MOV_DislikedMovies" controller="MOV_RatingController"
+                implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="movies" type="Object[]" access="public"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:if isTrue="{!v.movies.length > 0}">
+        <c:MOV_MovieList item="{!v.movies}"/>
+        <aura:set attribute="else">
+            <div class="slds-align_absolute-center">
+                <lightning:card title="Black list">
+                    <div style="width: 1150px" class="slds-align_absolute-center">
+                        There is nothing to show
+                    </div>
+                </lightning:card>
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

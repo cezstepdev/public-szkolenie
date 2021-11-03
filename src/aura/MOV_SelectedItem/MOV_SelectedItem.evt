@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="MOV_SelectedItem">
+    <aura:attribute name="item" type="Object"/>
+    <aura:attribute name="movies" type="Object[]"/>
+</aura:event>

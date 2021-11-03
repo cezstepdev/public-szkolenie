@@ -1,0 +1,6 @@
+<aura:component description="AccountDeleteModal">
+    <aura:attribute name="account" type="Account" access="public"/>
+    <div class="slds-align_absolute-center slds-m-bottom_small">
+        Do you really want to delete {!v.account.Name}?
+    </div>
+</aura:component>

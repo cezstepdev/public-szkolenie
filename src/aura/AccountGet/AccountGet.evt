@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="AccountGet">
+    <aura:attribute name="objectList" type="object[]"/>
+</aura:event>

@@ -1,0 +1,33 @@
+<apex:page id="HP_HospitalCustomView" standardController="Hospital__c">
+    <div class="bPageTitle">
+        <img src="/img/s.gif" class="pageTitleIcon"/>
+        <h1 class="pageType">{!$Setup.HierarchyViewName__c.HospitalDisplayName__c}</h1>
+        <h2 class="pageDescription" style="font-size: 21px">{!Hospital__c.Name}</h2>
+    </div>
+
+    <apex:form id="form">
+        <apex:pageBlock id="pageBlock" title="{!$Label.HospitalDetailTitle}">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="{!$Label.EditButton}" action="{!edit}"/>
+                <apex:commandButton value="{!$Label.DeleteButton}" action="{!delete}"/>
+                <apex:commandButton value="{!$Label.CloneButton}" action="{!URLFOR($Action.Hospital__c.Clone,Hospital__c.Id)}"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection title="{!$Label.GeneralTitle}" id="generalInfo">
+                <apex:outputField value="{!Hospital__c.Name}"/>
+                <apex:outputField value="{!Hospital__c.E_mail__c}"/>
+                <apex:outputField value="{!Hospital__c.Phone__c}"/>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection  title="{!$Label.DetailTitle}" id="detailInfo" collapsible="true">
+                <apex:outputField value="{!Hospital__c.Country__c}"/>
+                <apex:outputField value="{!Hospital__c.State__c}"/>
+                <apex:outputField value="{!Hospital__c.Street__c}"/>
+                <apex:outputField value="{!Hospital__c.City__c}"/>
+                <apex:outputField value="{!Hospital__c.Address__c}"/>
+                <apex:outputField value="{!Hospital__c.Zip_Code__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:relatedList list="Contracts__r"/>
+</apex:page>

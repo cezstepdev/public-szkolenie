@@ -1,0 +1,26 @@
+<aura:component description="SearchForm" controller="AURA_SearchFormController" implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="newItem" type="Account"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="AccountGet" type="c:AccountGet"/>
+    <aura:registerEvent name="ReloadAccount" type="c.ReloadAccount"/>
+
+    <aura:handler event="c.DoSearch" action="{!c.getAccounts}"/>
+
+    <lightning:card
+            iconName="standard:person_account"
+            title="Search Accounts">
+        <form class="slds-form-element_stacked">
+            <div style="display: flex; align-items: flex-end; justify-content: center">
+                <lightning:input label="Name"
+                                 name="itemName" value="{!v.newItem.Name}"
+                                 class="slds-m-around_small slds-m-top_none inputSize"
+                                 messageWhenValueMissing="You need to enter data"/>
+                <lightning:button label="Search" class="slds-m-top_medium"
+                                  variant="brand" onclick="{!c.getAccounts}"/>
+                <lightning:button label="Clear" class="slds-m-top_medium"
+                                  variant="neutral" onclick="{!c.clear}"/>
+            </div>
+        </form>
+    </lightning:card>
+    <c:Spinner aura:id="spinner"/>
+</aura:component>
