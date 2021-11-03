@@ -1,4 +1,4 @@
-<project name="Salesforce Ant tasks for English Live deployments" default="test-deploy-qa" basedir="." xmlns:sf="antlib:com.salesforce">
+<project name="Salesforce Ant" default="deploy" basedir="." xmlns:sf="antlib:com.salesforce">
     <property environment="env"/>
     <property file="build.properties"/>
 
@@ -11,7 +11,6 @@
         </classpath>
     </taskdef>
 
-    <!-- QA SANDBOX -->
 	<target name="validate" description="Test deployment to Developer Sandbox (without destructive changes)">
     <sf:deploy
                 username="${sf.username}"
